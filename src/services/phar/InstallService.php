@@ -49,10 +49,10 @@ class InstallService {
         $this->compatibilityService = $compatibilityChecker;
     }
 
-    public function execute(SupportedRelease $release, RequestedPhar $requestedPhar, Filename $destination, bool $updatePhiveXml): void {
+    public function execute(SupportedRelease $release, RequestedPhar $requestedPhar, Filename $destination, bool $updatePhiveXml, bool $skipSignatureVerification = false): void {
         $versionConstraint = $requestedPhar->getVersionConstraint();
         $makeCopy          = $requestedPhar->makeCopy();
-        $phar              = $this->pharService->getPharFromRelease($release);
+        $phar              = $this->pharService->getPharFromRelease($release, $skipSignatureVerification);
 
         if (!$this->compatibilityService->canRun($phar)) {
             return;

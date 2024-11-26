@@ -42,12 +42,12 @@ class PharDownloader {
      * @throws DownloadFailedException
      * @throws InvalidHashException
      */
-    public function download(SupportedRelease $release): Phar {
+    public function download(SupportedRelease $release, bool $skipSignatureVerification = false): Phar {
         $pharFile = $this->downloadFile($release->getUrl());
 
         $fingerprint = null;
 
-        if ($release->hasSignatureUrl()) {
+        if (!$skipSignatureVerification && $release->hasSignatureUrl()) {
             $fingerprint = $this->verifySignature(
                 $release,
                 $pharFile,

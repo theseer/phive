@@ -56,7 +56,7 @@ class InstallCommand implements Cli\Command {
         $release     = $this->resolveToRelease($requestedPhar);
         $destination = $this->getDestination($release->getUrl()->getPharName(), $requestedPhar, $targetDirectory);
 
-        $this->installService->execute($release, $requestedPhar, $destination, !$this->getConfig()->doNotAddToPhiveXml());
+        $this->installService->execute($release, $requestedPhar, $destination, !$this->getConfig()->doNotAddToPhiveXml(), $this->getConfig()->skipSignatureVerification());
     }
 
     protected function getConfig(): InstallCommandConfig {

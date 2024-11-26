@@ -20,19 +20,22 @@ class InstallContext extends GeneralContext {
 
     protected function getKnownOptions(): array {
         return [
-            'target'                => 't',
-            'copy'                  => 'c',
-            'global'                => 'g',
-            'temporary'             => false,
-            'trust-gpg-keys'        => false,
-            'force-accept-unsigned' => false
+            'target'                      => 't',
+            'copy'                        => 'c',
+            'global'                      => 'g',
+            'temporary'                   => false,
+            'trust-gpg-keys'              => false,
+            'force-accept-unsigned'       => false,
+            'skip-signature-verification' => false,
         ];
     }
 
     protected function getConflictingOptions(): array {
         return [
             ['global' => 'temporary'],
-            ['global' => 'target']
+            ['global' => 'target'],
+            ['skip-signature-verification' => 'trust-gpg-keys'],
+            ['skip-signature-verification' => 'force-accept-unsigned'],
         ];
     }
 }

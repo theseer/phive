@@ -22,13 +22,13 @@ class PharService {
         $this->downloader = $downloader;
     }
 
-    public function getPharFromRelease(SupportedRelease $release): Phar {
+    public function getPharFromRelease(SupportedRelease $release, bool $skipSignatureVerification = false): Phar {
         if ($this->registry->hasPhar($release->getName(), $release->getVersion())) {
             return $this->registry->getPhar($release->getName(), $release->getVersion());
         }
 
         return $this->registry->addPhar(
-            $this->downloader->download($release)
+            $this->downloader->download($release, $skipSignatureVerification)
         );
     }
 }
