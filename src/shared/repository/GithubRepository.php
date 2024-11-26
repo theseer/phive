@@ -36,7 +36,7 @@ class GithubRepository implements SourceRepository {
                 continue;
             }
             $pharUrl      = null;
-            $signatureUrl = null;
+            $signatureUrl = [];
 
             foreach ($entry['assets'] as $asset) {
                 $url = $asset['browser_download_url'];
@@ -48,7 +48,7 @@ class GithubRepository implements SourceRepository {
                 }
 
                 if (in_array(substr($url, -4, 4), ['.asc', '.sig'], true)) {
-                    $signatureUrl = new Url($url);
+                    $signatureUrl[$url] = new Url($url);
                 }
             }
 
@@ -60,6 +60,12 @@ class GithubRepository implements SourceRepository {
 
                 continue;
             }
+
+            // if the release has multiple signatures, use the one that's closest to the
+            // name of the phar, e.g. doctum.phar.asc instead of doctum.phar.sha256.asc
+            $signatureUrl = $signatureUrl[$pharUrl . '.asc']
+                ?? $signatureUrl[$pharUrl . '.sig']
+                ?? array_shift($signatureUrl);
 
             // we do have a phar but no signature, could potentially be used
             if (!$signatureUrl instanceof Url) {
