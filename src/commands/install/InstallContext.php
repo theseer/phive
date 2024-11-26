@@ -22,6 +22,7 @@ class InstallContext extends GeneralContext {
         return [
             'target'                => 't',
             'copy'                  => 'c',
+            'extension'             => 'e',
             'global'                => 'g',
             'temporary'             => false,
             'trust-gpg-keys'        => false,

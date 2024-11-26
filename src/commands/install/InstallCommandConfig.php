@@ -82,6 +82,10 @@ class InstallCommandConfig {
         return $this->cliOptions->hasOption('force-accept-unsigned');
     }
 
+    public function withExtension(): bool {
+        return $this->cliOptions->hasOption('extension');
+    }
+
     /**
      * @throws ConfiguredPharException
      *

@@ -25,6 +25,8 @@
     _-t, --target_                 Set custom target directory for the PHAR
 
     _-c, --copy_                   Copy PHAR file instead of using symlink
+    _-e, --extension_              Add extension ".phar" to installed file. It can be usefull for autocompletion by IDE
+                                   in configuration files of installed tools.
     _-g, --global_                 Install a copy of the PHAR globally (likely requires root privileges)
         _--temporary_              Do not add entries in phive.xml for installed PHARs
         _--trust-gpg-keys_         Silently import these keys when required (40-digit fingerprint

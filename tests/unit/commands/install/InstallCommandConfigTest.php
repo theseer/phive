@@ -148,6 +148,28 @@ class InstallCommandConfigTest extends TestCase {
         $this->assertSame($switch, $config->doNotAddToPhiveXml());
     }
 
+    /**
+     * @dataProvider boolProvider
+     *
+     * @param bool $switch
+     */
+    public function testWithExtension($switch): void {
+        $options = $this->getOptionsMock();
+        $options->expects($this->once())
+            ->method('hasOption')
+            ->with('extension')
+            ->willReturn($switch);
+
+        $config = new InstallCommandConfig(
+            $options,
+            $this->getPhiveXmlConfigMock(),
+            $this->getEnvironmentMock(),
+            $this->getTargetDirectoryLocatorMock()
+        );
+
+        $this->assertSame($switch, $config->withExtension());
+    }
+
     public function testConvertsRequestedPharAliasToLowercase(): void {
         $options = $this->getOptionsMock();
         $options->expects($this->any())

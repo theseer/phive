@@ -63,6 +63,14 @@ class InstallCommand implements Cli\Command {
         return $this->config;
     }
 
+    private function normaliseName(string $pharName): string {
+        if ($this->config->withExtension() && '.phar' !== substr($pharName, -5)) {
+            $pharName .= '.phar';
+        }
+
+        return $pharName;
+    }
+
     private function resolveToRelease(RequestedPhar $requestedPhar): SupportedRelease {
         $repository = $this->pharResolver->resolve($requestedPhar);
         $releases   = $repository->getReleasesByRequestedPhar($requestedPhar);
@@ -80,6 +88,6 @@ class InstallCommand implements Cli\Command {
             return $requestedPhar->getLocation();
         }
 
-        return $destination->file($pharName);
+        return $destination->file($this->normaliseName($pharName));
     }
 }
