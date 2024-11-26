@@ -17,6 +17,7 @@ use function in_array;
 use function sprintf;
 use DOMElement;
 use DOMNode;
+use DOMNodeList;
 use PharIo\FileSystem\Directory;
 use PharIo\FileSystem\DirectoryException;
 use PharIo\FileSystem\File;
@@ -85,8 +86,7 @@ class PharRegistry {
 
         $oldUsage = $this->dbFile->query(sprintf('//phive:usage[@destination="%s"]', $absolutePath))->item(0);
 
-        if ($oldUsage !== null) {
-            assert($oldUsage->parentNode instanceof DOMNode);
+        if ($oldUsage instanceof DOMNodeList) {
             $oldUsage->parentNode->removeChild($oldUsage);
         }
 
