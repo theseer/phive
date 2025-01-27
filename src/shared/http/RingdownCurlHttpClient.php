@@ -66,7 +66,10 @@ class RingdownCurlHttpClient implements HttpClient {
             } catch (HttpException $e) {
                 $this->output->writeError(sprintf('Request failed: %s', $e->getMessage()));
             }
-            $this->removeUnavailable($hostname);
+
+            if ($response !== null && !$response->isNotFound()) {
+                $this->removeUnavailable($hostname);
+            }
         }
 
         if ($response === null) {
